@@ -1,0 +1,29 @@
+
+0) Intro - legal text, etc.
+1) Pre-test: Consists of 16 questions
+
+2) Training: Should be flexible, and include the following options
+	2.1) A method for showing which of a set of shapes is in a particular category (e.g. array of 8 shapes, inc., s r h p (two of each)). In other words, a way to highlight examples.
+		2.1.1) "A teacher is going to give you some examples of a XYZ [s / r / h / p]"
+		2.1.2) Positive and negative examples
+	2.2) A method for describing principles, e.g. "A rhombus has two equal angles"
+
+3) Post-test: The same items as before.
+
+4) Debriefing: comments, demographics (age, gender, max level of education - census categories), math background (what was the last math class you took, how long ago in years), do you think of yourself as someone who likes math: 1 - not at all, 7 - a lot
+
+
+The questions are:
+
+Are all squares parallelograms?
+Are all squares rectangles?
+Are all squares also rhombuses?
+Are all rectangles also parallelograms?
+Are all rectangles also rhombuses?
+Are all rectangles also squares?
+Are all rhombuses also parallelograms?
+Are all rhombuses also rectangles?
+Are all rhombuses also squares?
+Are all parallelograms also rectangles?
+Are all parallelograms also rhombuses?
+Are all parallelograms also squares?

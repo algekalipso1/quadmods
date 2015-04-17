@@ -17,7 +17,9 @@ var skip_check = 1;
 // 0 delivers an uninformative table of examples.
 // 1 delivers an informative table of examples.
 // 2 provides descriptions of the qualities of each of the quadrilaterals.
-var training_regime = 2;
+// 3 Highlighting examples. This shows a table with all of the pictures, and then a selection of them
+//      is highlighted at the same time a teacher says "these are parallelograms", etc.
+var training_regime = 3;
 
 
 
@@ -60,11 +62,14 @@ for (var i = 0; i < 12; i++) {
 // All shapes involved
 shapes = ["squares", "rectangles", "rhombuses", "parallelograms"];
 var questions = [];
+var shape_abreviations = [];
 for (var i = 0; i < shapes.length; i++) {
     for (var j = 0; j < shapes.length; j++) {
         if (i != j) {
             var this_question = "Are all " + shapes[i] + " also " + shapes[j] +"?";
             questions.push(this_question);
+            var this_abreviation = shapes[i][0] + shapes[i][1] + "," + shapes[j][0] + shapes[j][1];
+            shape_abreviations.push(this_abreviation);
         }
     }
 }
@@ -76,6 +81,11 @@ for (var i = 0; i < questions.length; i++) {
 }
 if (questions_permuted == 1) {
     permutations = shuffle(permutations);
+}
+
+var permuted_abreviations = [];
+for (var i = 0; i < questions.length; i ++) {
+    permuted_abreviations.push(shape_abreviations[permutations[i]])
 }
 
 
@@ -100,10 +110,15 @@ var informative_training = [["square_1.png", "square_2.png"], ["rectangle_1.png"
 ["square_2.png", "rhombus_2.png"], ["rhombus_1.png", "rectangle_2.png"]];
 
 
+var all_shapes = [["square_1.png", "square_2.png"], ["rectangle_1.png", "rectangle_2.png"],
+["rhombus_1.png", "rhombus_2.png"], ["parallelogram_1.png", "parallelogram_2.png"]];
+
 var example_list = uninformative_training;
 if (training_regime == 1) {
     example_list = informative_training;
 }
+
+
 
 
 // Teacher says the following facts:

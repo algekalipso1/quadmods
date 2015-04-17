@@ -42,6 +42,10 @@ var experiment = {
     posttest_responses: posttest_answers,
     posttest_responses_by_presented_order: posttest_answers_by_order,
 
+    // Information to reconstruct
+    order_of_shapes: shape_abreviations,
+    order_as_presented: permuted_abreviations,
+
 
     // Participant demo info
     about: "",
@@ -74,7 +78,7 @@ var experiment = {
 		var training_html = "";
 
 		if (training_regime < 2) {
-			training_html += "<br> Take a look at these examples: <br>" 
+			training_html += "<br> Take a look at these examples: <br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr><td>' + shapes[i] + '</td>';
@@ -87,7 +91,7 @@ var experiment = {
 		}
 
 		if (training_regime == 2) {
-			training_html += "<br> A teacher is going to give you some facts: <br><br>" 
+			training_html += "<br> A teacher is going to give you some facts: <br><br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < teacher_facts.length; i++) {
 				training_html += '<tr><td> Fact # ' + String(i) + '</td>';
@@ -95,7 +99,21 @@ var experiment = {
 				training_html += '</tr>';
 			}
 			training_html += '</table>'
-			
+		}
+
+		// This training regime uses the CSS functionality of highlighting specific images to point out
+		// elements of a class of shapes.
+		if (training_regime == 3) {
+			training_html += "<br> Look at all of these shapes: <br><br>";
+			training_html += '<table align="center">';
+			for (i = 0; i < 4; i++) {
+				training_html += '<tr><td>Group ' + String(i + 1) + '</td>';
+				for (j = 0; j < 2; j++) {
+					training_html += '<td><img width=64px height=64px class="unchosen objTable" id="tdchoice' + String(i) + '_' + String(j) + '"  onclick="experiment.select_shape(' + String(i) + ',' + String(j) + ')" src=shapes/' + all_shapes[i][j] + '></td>';
+				}
+				training_html += '</tr>';
+			}
+			training_html += '</table>'
 		}
 
 		$("#training_examples").html(training_html);
@@ -123,6 +141,17 @@ var experiment = {
 		showSlide("final_questions");	
 	},
 
+
+	// Functions for dynamic interaction with the participant:
+	//$("#tdchoice" + String(c)).removeClass('unchosen').addClass('chosen')
+	select_shape: function(i, j) {
+		for (var ii=0; ii<all_shapes.length; ii++) {
+			for (var jj = 0; jj<all_shapes[0].length; jj++) {
+				$("#tdchoice" + String(ii) + '_' + String(jj)).removeClass('chosen').addClass('unchosen');
+			}
+		}
+		$("#tdchoice" + String(i) + '_' + String(j)).removeClass('unchosen').addClass('chosen');
+	},
 
 
 	// Tests if the answers to the pretest were provided fully

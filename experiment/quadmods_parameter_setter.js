@@ -19,7 +19,18 @@ var skip_check = 1;
 // 2 provides descriptions of the qualities of each of the quadrilaterals.
 // 3 Highlighting examples. This shows a table with all of the pictures, and then a selection of them
 //      is highlighted at the same time a teacher says "these are parallelograms", etc.
+// 4 Passive learning condition (where a few boxes get highlighted).
 var training_regime = 3;
+
+// For the specfic case of training_regime = 4, you have to specify which shapes actually get highlighted
+var highlighted_boxes = [[0, 1], [1, 0], [3, 2]];
+
+// Shape of focus for teaching: 
+//  0 -> squares
+//  1 -> rectangles
+//  2 -> rhombuses
+//  3 -> parallelograms
+var shape_of_focus = 2;
 
 
 
@@ -52,14 +63,22 @@ for (var i = 0; i < 12; i++) {
     posttest_answers_by_order.push(-1);
 }
 
+// In case of training regime 3, keeps track of the number of examples clicked/revealed/tried
+var examples_clicked = 0;
+
+
+// This is to track the shapes that were guessed:
+var guessed_shapes = [];
+
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Processing of variables to set experiment.
 
-// Add array
+
 
 // All shapes involved
+singular_shapes = ["square", "rectangle", "rhombuse", "parallelogram"];
 shapes = ["squares", "rectangles", "rhombuses", "parallelograms"];
 var questions = [];
 var shape_abreviations = [];
@@ -98,6 +117,17 @@ var posttest_radials = [["q1_0_yes", "q1_0_no"], ["q1_1_yes", "q1_1_no"], ["q1_2
 ["q1_4_yes", "q1_4_no"], ["q1_5_yes", "q1_5_no"], ["q1_6_yes", "q1_6_no"], ["q1_7_yes", "q1_7_no"], ["q1_8_yes", "q1_8_no"],
 ["q1_9_yes", "q1_9_no"], ["q1_10_yes", "q1_10_no"], ["q1_11_yes", "q1_11_no"]];
 
+// Bootstrap button ids 
+var pretest_bootstrap = [];
+for (var i = 0; i < questions.length; i++) {
+    pretest_bootstrap.push("pretest_" + String(i));
+}
+
+var posttest_bootstrap = [];
+for (var i = 0; i < questions.length; i++) {
+    posttest_bootstrap.push("posttest_" + String(i));
+}
+
 
 
 // Seting up the variables for the training slide.
@@ -110,8 +140,16 @@ var informative_training = [["square_1.png", "square_2.png"], ["rectangle_1.png"
 ["square_2.png", "rhombus_2.png"], ["rhombus_1.png", "rectangle_2.png"]];
 
 
-var all_shapes = [["square_1.png", "square_2.png"], ["rectangle_1.png", "rectangle_2.png"],
-["rhombus_1.png", "rhombus_2.png"], ["parallelogram_1.png", "parallelogram_2.png"]];
+var all_shapes = [["square_1.png", "square_2.png", "square_3.png"], ["rectangle_1.png", "rectangle_2.png", "rectangle_3.png"],
+["rhombus_1.png", "rhombus_2.png", "rhombus_3.png"], ["parallelogram_1.png", "parallelogram_2.png", "parallelogram_3.png"]];
+
+var isSquare = [1, 0, 0, 0];
+var isRectanlge = [1, 1, 0, 0];
+var isRhombus = [1, 0, 1, 0];
+var isParallelogram = [1, 1, 1, 1];
+
+var isShape = [isSquare, isRectanlge, isRhombus, isParallelogram];
+
 
 var example_list = uninformative_training;
 if (training_regime == 1) {
@@ -122,6 +160,21 @@ if (training_regime == 1) {
 
 
 // Teacher says the following facts:
-var teacher_facts = ["For a given angle in a rhombus, its opposite angle is the same", "All of the sides of a rhombus have the same length", 
-"A square has four sides of equal length, and four 90 degree angles", "The angles of a rectangle are all 90 degree, and opposite sides have the same length",
-"The opposite sides of a parallelogram are parallel", "A parallelogram can have 4 equal sides"];
+var teacher_facts = [" For a given angle in a rhombus, its opposite angle is the same", " All of the sides of a rhombus have the same length", 
+" A square has four sides of equal length, and four 90 degree angles", " The angles of a rectangle are all 90 degree, and opposite sides have the same length",
+" The opposite sides of a parallelogram are parallel", " A parallelogram can have 4 equal sides"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

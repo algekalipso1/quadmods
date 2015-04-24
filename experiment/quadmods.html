@@ -1,7 +1,15 @@
 <!DOCTYPE html> <!-- You need to add this line so that IE renders fun CSS style stuff like unchosen:hover -->
 <html>
   <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Geometry yes or no questions</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- What does this js script do? -->
     <script src="jquery.min.js"></script>
@@ -17,6 +25,7 @@
 
     <!-- What does this meta do? -->
     <meta name="viewport" content="initial-scale=1.0" />
+
   </head>
 
   <body>
@@ -29,8 +38,8 @@
       <p class="block-text">In this experiment, we're interested in your judgments about the membership of shapes into geometric classes. First you will answer some questions, then you will be shown a series of examples, and then you will be asked to answer additional question. It should take about 5 minutes. </p>
 
       <!-- If there is a familiarization stage then the next line should be active, otherwise the one after that should be active-->
-      <button type="button" onClick="this.blur(); experiment.pre_test_slide()">Start</button>
-      
+      <!--<button type="button" onClick="this.blur(); experiment.pre_test_slide()">Start</button> -->
+      <button type="button" onClick="this.blur(); experiment.pre_test_slide()">Start</button>      
 
       <!-- <button type="button" onClick="this.blur(); experiment.next_test()">Start</button> -->
 
@@ -47,42 +56,33 @@
       </p>
     </div>
 
+    <!-- Pre test -->
     <div class = "slide" id = "pre_test">
-      <p class="block-text">
-        Please answer these yes or no questions:
-      </p>
-      <div id ="pre_test_questions"> </div> <!-- questions dynamically built in javascript-->
       <table align="center"><tr><td align="center">
-        <button type="button" id="pretest_to_training" onClick="experiment.first_test_check()">Next</button>
-        <div id="pre_test_check"> </div>
-        </td></tr></table>
+      <div id ="pre_test_questions"> </div> <!-- questions dynamically built in javascript-->
+      <button type="button" id="pretest_to_training" onClick="experiment.first_test_check()">Next</button>
+      <div id="pre_test_check"> </div>
+      </td></tr>
+      </table>
     </div>
 
-
-
-
-
+    <!-- training slide -->
     <div class = "slide" id ="training">
       <div id = "training_examples"> </div>
       <table align="center"><tr><td align="center">
-        <button type="button" id="training_to_posttest" onClick="experiment.post_test_slide()">Next</button>
+        <button type="button" id="training_to_posttest" onClick="experiment.training_test_check()">Next</button>
         <div id="training_check"> </div><!--dynamically built in javascript-->
         </td></tr></table>
     </div>
 
-
-
-
-
+    <!-- post test -->
     <div class = "slide" id = "post_test">
-      <p class="block-text">
-        Please answer these yes or no questions:
-      </p>
-      <div id ="post_test_questions"> </div> <!-- questions dynamically built in javascript-->
       <table align="center"><tr><td align="center">
-        <button type="button" id="posttest_to_final_question" onClick="experiment.second_test_check()">Next</button>
+        <div id ="post_test_questions"> </div> <!-- questions dynamically built in javascript-->
+        <button type="button" id="pretest_to_training" onClick="experiment.second_test_check()">Next</button>
         <div id="post_test_check"> </div>
-        </td></tr></table>
+        </td></tr>
+      </table>
     </div>
 
 
@@ -128,9 +128,10 @@
     <!-- This .js file is in charge of controlling the dynamic glow of the activities including constructing the text that is used in the familiarization task and -->
     <script src="quadmods_control_flow.js"></script>
 
-    <!-- It is expected that a general experiment builder will be added here in the end. Most
-    likely it will be a .js file, but it may also be encoded some other way, perhaps as a command line
-    tool, or somethig akin to the submiterator, which *generates* a shell script based on the parameter
-    that you want. Ask Mickael about it, to see what is the most convinient. -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+
   </body>
 </html>

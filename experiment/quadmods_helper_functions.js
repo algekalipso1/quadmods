@@ -85,6 +85,26 @@ function stimHTML(base, n, prop_mat, props, id, file_number) {
 }
 
 
+
+// Determine if the shape belongs to the shape of focus:
+//function isShapeOfFocus()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // the patch of color by color? 
 
 // Select color at first!

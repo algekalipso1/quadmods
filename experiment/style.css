@@ -82,6 +82,16 @@ This stuff will vary by experiment.
     border: 5px solid red;
 }
 
+.chosenCorrect {
+    border: 5px solid green;
+}
+
+
+.highlighted {
+    border: 5px dashed black;
+}
+
+
 .notChoices {
 	border: 0px solid red;
 }

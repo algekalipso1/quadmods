@@ -27,3 +27,40 @@ Are all rhombuses also squares?
 Are all parallelograms also rectangles?
 Are all parallelograms also rhombuses?
 Are all parallelograms also squares?
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pilot: Rhombuses - highlighting 
+
+
+Node was installed at
+
+   /usr/local/bin/node
+
+npm was installed at
+
+   /usr/local/bin/npm
+Make sure that /usr/local/bin is in your $PATH.
+
+
+
+// How to get bootstrap button values (?!)
+
+var num = null;
+$(".btn-group > button.btn").on("click", function(){
+    num = +this.innerHTML;
+    alert("Value is " + num);
+});
+
+// I think this works better (at all):
+$("#my_radiogroup .active").data("value");

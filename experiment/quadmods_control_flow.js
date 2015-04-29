@@ -60,16 +60,20 @@ var experiment = {
 	// Bootstrap testing function
 	pre_test_slide: function() {
 		if (window.self == window.top | turk.workerId.length > 0) {
-			var initial_questions = "Please answer these yes or no questions: <br><br>";
+			var initial_questions = "Let's start with some questions. <br> Please answer yes or no on each of the questions: <br><br>";
+			initial_questions += '<table align="center">';
 			for (var i = 0; i < questions.length; i++) {
+				initial_questions += "<tr><td>";
 				var perm_index = permutations[i];
-				var html_of_this_q = questions[perm_index];
-				html_of_this_q += "<div class='btn-group' data-toggle='buttons-checkbox' id=" + pretest_bootstrap[i] + ">";
-		        html_of_this_q += "<button type='button' class='btn' data-value='0' onclick ='experiment.boostrap_pre_button_select(\"pretest_" + String(i) +"\", 0, " + String(i) +  ")'>Yes</button>";
-		        html_of_this_q += "<button type='button' class='btn' data-value='1' onclick ='experiment.boostrap_pre_button_select(\"pretest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
-		        html_of_this_q += "</div> <br>";
-				initial_questions += html_of_this_q;
+				initial_questions += questions[perm_index];
+				initial_questions += "</td><td>";
+				initial_questions += "<div class='btn-group' data-toggle='buttons-checkbox' id=" + pretest_bootstrap[i] + ">";
+		        initial_questions += "<button type='button' class='btn btn-primary' data-value='0' onclick ='experiment.boostrap_pre_button_select(\"pretest_" + String(i) +"\", 0, " + String(i) +  ")'>Yes</button>";
+		        initial_questions += "<button type='button' class='btn btn-primary' data-value='1' onclick ='experiment.boostrap_pre_button_select(\"pretest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
+		        initial_questions += "</div> <br>";
+		        initial_questions += "</td></tr>";
 			};
+			initial_questions += "</table>";
 			$("#pre_test_questions").html(initial_questions);
 			showSlide("pre_test");	
 		}
@@ -80,9 +84,9 @@ var experiment = {
 		var training_html = "";
 
 		if (training_regime < 2) {
-			training_html += "<br> We're going to learn about all the shapes you just "; 
+			training_html += "<center><br> We're going to learn about all the shapes you just "; 
 			training_html += "answered questions about. <br> Here are examples from each of the ";
-			training_html += "categories. Take a close look. <br> After you're done, you will be tested again on your knowledge. <br><br>";
+			training_html += "categories. Take a close look. <br> After you're done, you will be tested again on your knowledge. </center><br><br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr><td>' + shapes[i] + '</td>';
@@ -108,8 +112,8 @@ var experiment = {
 		// This training regime uses the CSS functionality of highlighting specific images to point out
 		// elements of a class of shapes.
 		if (training_regime == 3) {
-			training_html += "<br>We're going to learn about what a " + singular_shapes[shape_of_focus] +  " is. Click on three of the shapes below to learn whether each one is a " + singular_shapes[shape_of_focus] +  " or not. ";
-			training_html +=  "If it's a " + singular_shapes[shape_of_focus] +  ", it'll turn green when you click it. If it isn't, it'll turn red. Choose carefully so that you can learn as much as you can about " + shapes[shape_of_focus] +  ". After you're done, you will be tested again on your knowledge. <br><br>";
+			training_html += "<br>We're going to learn about what a <b>" + singular_shapes[shape_of_focus] +  "</b> is. Click on three of the shapes below to learn whether each one is a " + singular_shapes[shape_of_focus] +  " or not. ";
+			training_html +=  "If it's a <b>" + singular_shapes[shape_of_focus] +  "</b>, it'll turn green when you click it. If it isn't, it'll turn red. Choose carefully so that you can learn as much as you can about " + shapes[shape_of_focus] +  ". After you're done, you will be tested again on your knowledge. <br><br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr>';
@@ -123,26 +127,28 @@ var experiment = {
 
 
 		if (training_regime == 4) {
-			experiment.highlight_boxes();
-			training_html +=  "We're going to learn about what a " + singular_shapes[shape_of_focus] +  " is. <br>";
-			training_html +=  "On the basis of your responses, a teacher has chosen three examples to show you what " + shapes[shape_of_focus] +  " are."; 
-			training_html +=  " Click on the three shapes with the boxes around them to learn whether each one is a "+ singular_shapes[shape_of_focus] + " or not. ";
-			training_html += "If it's a "+ singular_shapes[shape_of_focus] + ", it'll turn green when you click it. <br>";
-			training_html +=  " After you're done, you will be tested again on your knowledge.";
+			training_html +=  "<center>We're going to learn about what a <b>" + singular_shapes[shape_of_focus] +  "</b> is. <br>";
+			training_html +=  "On the basis of your responses, a teacher has chosen three examples to show you what <b>" + shapes[shape_of_focus] +  "</b> are. <br>"; 
+			training_html +=  " Click on the three shapes with the boxes around them to learn whether each one is a <b>"+ singular_shapes[shape_of_focus] + "</b> or not. <br>";
+			training_html += "If it's a <b>"+ singular_shapes[shape_of_focus] + "</b>, it'll turn green when you click it. <br>";
+			training_html +=  " After you're done, you will be tested again on your knowledge. </center><br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr>';
 				for (j = 0; j < 3; j++) {
-					training_html += '<td><img width=64px height=64px class="unchosen objTable" id="tdchoice' + String(i) + '_' + String(j) + '"  onclick="experiment.select_highlighted_shape(' + String(i) + ',' + String(j) + ')" src=shapes/' + all_shapes[i][j] + '></td>';
+					training_html += '<td><img width=64px height=64px class="withoutHover objTable" id="tdchoice' + String(i) + '_' + String(j) + '"  onclick="experiment.select_highlighted_shape(' + String(i) + ',' + String(j) + ')" src=shapes/' + all_shapes[i][j] + '></td>';
 				}
 				training_html += '</tr>';
 			}
 			training_html += '</table>'
 		}
-
-
 		$("#training_examples").html(training_html);
 		showSlide("training");	
+
+		// After instantiation
+		if (training_regime == 4) {
+			experiment.highlight_boxes();
+		}
 	},
 
 
@@ -150,15 +156,19 @@ var experiment = {
 
 	post_test_slide: function() {
 		var post_questions = "Please answer these yes or no questions: <br><br>";
+		post_questions += '<table align="center">';
 		for (var i = 0; i < questions.length; i++) {
+			post_questions += "<tr><td>";
 			var perm_index = permutations[i];
-			var html_of_this_q = questions[perm_index];
-			html_of_this_q += "<div class='btn-group' data-toggle='buttons-checkbox' id=" + posttest_bootstrap[i] + ">";
-	        html_of_this_q += "<button type='button' class='btn' data-value='0' onclick ='experiment.boostrap_post_button_select(\"posttest_" + String(i) +"\", 0, " + String(i) +  ")'>Yes</button>";
-	        html_of_this_q += "<button type='button' class='btn' data-value='1' onclick ='experiment.boostrap_post_button_select(\"posttest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
-	        html_of_this_q += "</div> <br>";
-			post_questions += html_of_this_q;
+			post_questions += questions[perm_index];
+			post_questions += "</td><td>";
+			post_questions += "<div class='btn-group' data-toggle='buttons-checkbox' id=" + posttest_bootstrap[i] + ">";
+	        post_questions += "<button type='button' class='btn btn-primary' data-value='0' onclick ='experiment.boostrap_post_button_select(\"posttest_" + String(i) +"\", 0, " + String(i) +  ")'>Yes</button>";
+	        post_questions += "<button type='button' class='btn btn-primary' data-value='1' onclick ='experiment.boostrap_post_button_select(\"posttest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
+	        post_questions += "</div> <br>";
+		    post_questions += "</td></tr>";
 		};
+		post_questions += "</table>";
 		$("#post_test_questions").html(post_questions);
 		showSlide("post_test");	
 	},
@@ -205,7 +215,7 @@ var experiment = {
 
 	// For the case of active and passive teaching
 	guess_this_shape: function(i, j) {
-		if (examples_clicked < 3) {
+		if (examples_clicked < examples_to_show) {
 			if ($("#tdchoice" + String(i) + '_' + String(j)).attr("class") == "unchosen objTable") {
 				if (isShape[shape_of_focus][i] == 0) {
 					$("#tdchoice" + String(i) + '_' + String(j)).removeClass('unchosen').addClass('chosen');
@@ -214,6 +224,13 @@ var experiment = {
 				}
 				examples_clicked = examples_clicked + 1;
 				guessed_shapes.push([i, j]);
+			};
+		};
+		if (examples_clicked == examples_to_show) {
+			for (var ii = 0; ii < all_shapes.length; ii++) {
+				for (jj = 0; jj < all_shapes[0].length; jj++) {
+					$("#tdchoice" + String(ii) + '_' + String(jj)).removeClass('unchosen').addClass('withoutHover');
+				};
 			};
 		};
 	},
@@ -236,14 +253,18 @@ var experiment = {
 
 	select_highlighted_shape: function(i, j) {
 		var in_highlighted = 0;
-		for (ii = 0; ii <highlighted_boxes.length; ii++) {
+		for (ii = 0; ii < highlighted_boxes.length; ii++) {
 			if (highlighted_boxes[ii][0] == i && highlighted_boxes[ii][1] == j) {
 				in_highlighted = 1;
 			}
 		}
 		if (examples_clicked < 3 && in_highlighted == 1) {
-			if ($("#tdchoice" + String(i) + '_' + String(j)).attr("class") == "unchosen objTable highlighted") {
+			if ($("#tdchoice" + String(i) + '_' + String(j)).attr("class") == "withoutHover objTable highlighted") {
 				if (isShape[shape_of_focus][i] == 0) {
+					$("#tdchoice" + String(i) + '_' + String(j)).removeClass('highlighted').addClass('chosen');
+					examples_clicked = examples_clicked + 1;
+					guessed_shapes.push([i, j]);
+				} else {
 					$("#tdchoice" + String(i) + '_' + String(j)).removeClass('highlighted').addClass('chosenCorrect');
 					examples_clicked = examples_clicked + 1;
 					guessed_shapes.push([i, j]);
@@ -272,7 +293,7 @@ var experiment = {
 
 
 	training_test_check: function() {
-		if ((training_regime == 3 || training_regime == 4)  && examples_clicked < 3) {
+		if (((training_regime == 3 || training_regime == 4)  && examples_clicked < examples_to_show) && skip_check == 0) {
 			var click_on_three = '<font color="red">Please click on three shapes.</font>';
 			$("#training_check").html(click_on_three)
 		} else {

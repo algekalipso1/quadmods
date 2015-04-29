@@ -75,7 +75,11 @@ This stuff will vary by experiment.
 }
 
 .unchosen:hover {
-    border: 5px dashed red;
+    border: 5px dashed blue;
+}
+
+.withoutHover {
+    border: 5px solid white;
 }
 
 .chosen {
@@ -88,13 +92,17 @@ This stuff will vary by experiment.
 
 
 .highlighted {
-    border: 5px dashed black;
+    border: 5px dashed blue;
 }
 
 
 .notChoices {
 	border: 0px solid red;
 }
+
+
+
+
 
 
 #logo-text {

@@ -20,21 +20,38 @@ var skip_check = 1;
 // 3 Highlighting examples. This shows a table with all of the pictures, and then a selection of them
 //      is highlighted at the same time a teacher says "these are parallelograms", etc.
 // 4 Passive learning condition (where a few boxes get highlighted).
-var training_regime = 3;
+var training_regime = 0;
 
-// For the specfic case of training_regime = 4, you have to specify which shapes actually get highlighted
-var highlighted_boxes = [[0, 1], [1, 0], [3, 2]];
+// Number of examples to show. This is specifically for the case of training_regime == 3. If training_regime == 4
+// then you control the number of examples by editing the highlighted_boxes, which determines the specific examples used.
+var examples_to_show = 3;
+
 
 // Shape of focus for teaching: 
 //  0 -> squares
 //  1 -> rectangles
 //  2 -> rhombuses
 //  3 -> parallelograms
-var shape_of_focus = 2;
+var shape_of_focus = 3;
 
 
 
 
+
+// For the specfic case of training_regime = 4, you have to specify which shapes actually get highlighted.
+var highlighted_boxes = [];
+if (shape_of_focus == 0) {
+    highlighted_boxes = [[0, 1], [1, 0], [3, 2]];
+}
+if (shape_of_focus == 1) {
+    highlighted_boxes = [[0, 0], [1, 2], [3, 1]];
+}
+if (shape_of_focus == 2) {
+    highlighted_boxes = [[0, 1], [2, 0], [3, 2]];
+}
+if (shape_of_focus == 3) {
+    highlighted_boxes = [[2, 1], [1, 0], [3, 1]];
+}
 
 
 
@@ -78,7 +95,7 @@ var guessed_shapes = [];
 
 
 // All shapes involved
-singular_shapes = ["square", "rectangle", "rhombuse", "parallelogram"];
+singular_shapes = ["square", "rectangle", "rhombus", "parallelogram"];
 shapes = ["squares", "rectangles", "rhombuses", "parallelograms"];
 var questions = [];
 var shape_abreviations = [];

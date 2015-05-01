@@ -19,8 +19,9 @@ var skip_check = 1;
 // 2 provides descriptions of the qualities of each of the quadrilaterals.
 // 3 Highlighting examples. This shows a table with all of the pictures, and then a selection of them
 //      is highlighted at the same time a teacher says "these are parallelograms", etc.
-// 4 Passive learning condition (where a few boxes get highlighted).
-var training_regime = 0;
+// 4 Passive learning condition: few boxes get highlighted and participant is required to click on the highlighted boxes
+// 5 Baseline condition: You present the same layout as in 3 and 4. But no highlighting or anything. 
+var training_regime = 4;
 
 // Number of examples to show. This is specifically for the case of training_regime == 3. If training_regime == 4
 // then you control the number of examples by editing the highlighted_boxes, which determines the specific examples used.
@@ -32,7 +33,7 @@ var examples_to_show = 3;
 //  1 -> rectangles
 //  2 -> rhombuses
 //  3 -> parallelograms
-var shape_of_focus = 3;
+var shape_of_focus = 2;
 
 
 

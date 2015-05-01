@@ -75,7 +75,7 @@ This stuff will vary by experiment.
 }
 
 .unchosen:hover {
-    border: 5px dashed blue;
+    border: 5px dashed green;
 }
 
 .withoutHover {
@@ -87,12 +87,12 @@ This stuff will vary by experiment.
 }
 
 .chosenCorrect {
-    border: 5px solid green;
+    border: 5px solid blue;
 }
 
 
 .highlighted {
-    border: 5px dashed blue;
+    border: 5px dashed green;
 }
 
 

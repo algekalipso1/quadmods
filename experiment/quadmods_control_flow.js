@@ -66,10 +66,10 @@ var experiment = {
 				initial_questions += "<tr><td>";
 				var perm_index = permutations[i];
 				initial_questions += questions[perm_index];
-				initial_questions += "</td><td>";
+				initial_questions += " &nbsp &nbsp </td><td>";
 				initial_questions += "<div class='btn-group' data-toggle='buttons-checkbox' id=" + pretest_bootstrap[i] + ">";
 		        initial_questions += "<button type='button' class='btn btn-primary' data-value='0' onclick ='experiment.boostrap_pre_button_select(\"pretest_" + String(i) +"\", 0, " + String(i) +  ")'>Yes</button>";
-		        initial_questions += "<button type='button' class='btn btn-primary' data-value='1' onclick ='experiment.boostrap_pre_button_select(\"pretest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
+		        initial_questions += "<button type='button' class='btn btn-danger' data-value='1' onclick ='experiment.boostrap_pre_button_select(\"pretest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
 		        initial_questions += "</div> <br>";
 		        initial_questions += "</td></tr>";
 			};
@@ -91,7 +91,7 @@ var experiment = {
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr><td>' + shapes[i] + '</td>';
 				for (j = 0; j < 2; j++) {
-					training_html += '<td><img width=64px height=64px src=shapes/' + example_list[i][j] + '></td>';
+					training_html += '<td><img width=100px height=100px src=shapes/' + example_list[i][j] + '></td>';
 				}
 				training_html += '</tr>';
 			}
@@ -99,11 +99,11 @@ var experiment = {
 		}
 
 		if (training_regime == 2) {
-			training_html += "<br> A teacher is going to give you some facts: <br><br>";
-			training_html += '<table align="center">';
+			training_html += "<br> <center>A teacher is going to give you some facts: </center> <br><br>";
+			training_html += '<table align="center" >';
 			for (i = 0; i < teacher_facts.length; i++) {
 				training_html += '<tr><td> Fact #  ' + String(i) + ' </td>';
-				training_html += '<td> ' + teacher_facts[i] + '</td>';
+				training_html += '<td> &nbsp &nbsp' + teacher_facts[i] + '</td>';
 				training_html += '</tr>';
 			}
 			training_html += '</table>'
@@ -112,36 +112,51 @@ var experiment = {
 		// This training regime uses the CSS functionality of highlighting specific images to point out
 		// elements of a class of shapes.
 		if (training_regime == 3) {
-			training_html += "<br>We're going to learn about what a <b>" + singular_shapes[shape_of_focus] +  "</b> is. Click on three of the shapes below to learn whether each one is a " + singular_shapes[shape_of_focus] +  " or not. ";
-			training_html +=  "If it's a <b>" + singular_shapes[shape_of_focus] +  "</b>, it'll turn green when you click it. If it isn't, it'll turn red. Choose carefully so that you can learn as much as you can about " + shapes[shape_of_focus] +  ". After you're done, you will be tested again on your knowledge. <br><br>";
+			training_html += "<br>We're going to learn about what a <b>" + singular_shapes[shape_of_focus] +  "</b> is. <br>Click on three of the shapes below to learn whether each one is a " + singular_shapes[shape_of_focus] +  " or not. <br>";
+			training_html +=  "If it's a <b>" + singular_shapes[shape_of_focus] +  "</b>, it'll turn <font color='blue'>blue</font> when you click it. If it isn't, it'll turn <font color='red'>red</font>. <br>Choose carefully so that you can learn as much as you can about " + shapes[shape_of_focus] +  ". After you're done, you will be tested again on your knowledge. <br><br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr>';
 				for (j = 0; j < 3; j++) {
-					training_html += '<td><img width=64px height=64px class="unchosen objTable" id="tdchoice' + String(i) + '_' + String(j) + '"  onclick="experiment.guess_this_shape(' + String(i) + ',' + String(j) + ')" src=shapes/' + all_shapes[i][j] + '></td>';
+					training_html += '<td><img width=100px height=100px class="unchosen objTable" id="tdchoice' + String(i) + '_' + String(j) + '"  onclick="experiment.guess_this_shape(' + String(i) + ',' + String(j) + ')" src=shapes/' + all_shapes[i][j] + '></td>';
 				}
 				training_html += '</tr>';
 			}
 			training_html += '</table>'
 		}
 
-
+		// Passive learning condition
 		if (training_regime == 4) {
-			training_html +=  "<center>We're going to learn about what a <b>" + singular_shapes[shape_of_focus] +  "</b> is. <br>";
+			training_html +=  "We're going to learn about what a <b>" + singular_shapes[shape_of_focus] +  "</b> is. <br>";
 			training_html +=  "On the basis of your responses, a teacher has chosen three examples to show you what <b>" + shapes[shape_of_focus] +  "</b> are. <br>"; 
 			training_html +=  " Click on the three shapes with the boxes around them to learn whether each one is a <b>"+ singular_shapes[shape_of_focus] + "</b> or not. <br>";
-			training_html += "If it's a <b>"+ singular_shapes[shape_of_focus] + "</b>, it'll turn green when you click it. <br>";
-			training_html +=  " After you're done, you will be tested again on your knowledge. </center><br>";
+			training_html += "If it's a <b>"+ singular_shapes[shape_of_focus] + "</b>, it'll turn <font color='blue'>blue</font> when you click it. If it isn't, it'll turn <font color='red'>red</font>.";
+			training_html +=  " After you're done, you will be tested again on your knowledge. <br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr>';
 				for (j = 0; j < 3; j++) {
-					training_html += '<td><img width=64px height=64px class="withoutHover objTable" id="tdchoice' + String(i) + '_' + String(j) + '"  onclick="experiment.select_highlighted_shape(' + String(i) + ',' + String(j) + ')" src=shapes/' + all_shapes[i][j] + '></td>';
+					training_html += '<td><img width=100px height=100px class="withoutHover objTable" id="tdchoice' + String(i) + '_' + String(j) + '"  onclick="experiment.select_highlighted_shape(' + String(i) + ',' + String(j) + ')" src=shapes/' + all_shapes[i][j] + '></td>';
 				}
 				training_html += '</tr>';
 			}
 			training_html += '</table>'
 		}
+
+		// Control layout: Same as in 3 & 4, but no participant action required.
+		if (training_regime == 5) {
+			training_html +=  "<center> Take a look at these examples of quadrilaterals.</center><br>";
+			training_html += '<table align="center">';
+			for (i = 0; i < 4; i++) {
+				training_html += '<tr>';
+				for (j = 0; j < 3; j++) {
+					training_html += '<td><img width=100px height=100px class="withoutHover objTable" id="tdchoice' + String(i) + '_' + String(j) + '" src=shapes/' + all_shapes[i][j] + '></td>';
+				}
+				training_html += '</tr>';
+			}
+			training_html += '</table>'
+		}
+
 		$("#training_examples").html(training_html);
 		showSlide("training");	
 
@@ -161,10 +176,10 @@ var experiment = {
 			post_questions += "<tr><td>";
 			var perm_index = permutations[i];
 			post_questions += questions[perm_index];
-			post_questions += "</td><td>";
+			post_questions += " &nbsp &nbsp </td><td>";
 			post_questions += "<div class='btn-group' data-toggle='buttons-checkbox' id=" + posttest_bootstrap[i] + ">";
 	        post_questions += "<button type='button' class='btn btn-primary' data-value='0' onclick ='experiment.boostrap_post_button_select(\"posttest_" + String(i) +"\", 0, " + String(i) +  ")'>Yes</button>";
-	        post_questions += "<button type='button' class='btn btn-primary' data-value='1' onclick ='experiment.boostrap_post_button_select(\"posttest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
+	        post_questions += "<button type='button' class='btn btn-danger' data-value='1' onclick ='experiment.boostrap_post_button_select(\"posttest_" + String(i) +"\", 1,  " + String(i) +  ")'>No</button>";
 	        post_questions += "</div> <br>";
 		    post_questions += "</td></tr>";
 		};

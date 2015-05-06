@@ -21,7 +21,7 @@ var skip_check = 1;
 //      is highlighted at the same time a teacher says "these are parallelograms", etc.
 // 4 Passive learning condition: few boxes get highlighted and participant is required to click on the highlighted boxes
 // 5 Baseline condition: You present the same layout as in 3 and 4. But no highlighting or anything. 
-var training_regime = 4;
+var training_regime = 5;
 
 // Number of examples to show. This is specifically for the case of training_regime == 3. If training_regime == 4
 // then you control the number of examples by editing the highlighted_boxes, which determines the specific examples used.
@@ -34,6 +34,7 @@ var examples_to_show = 3;
 //  2 -> rhombuses
 //  3 -> parallelograms
 var shape_of_focus = 2;
+
 
 
 
@@ -53,6 +54,8 @@ if (shape_of_focus == 2) {
 if (shape_of_focus == 3) {
     highlighted_boxes = [[2, 1], [1, 0], [3, 1]];
 }
+
+
 
 
 
@@ -87,6 +90,9 @@ var examples_clicked = 0;
 
 // This is to track the shapes that were guessed:
 var guessed_shapes = [];
+
+// Time variables
+var times = [];
 
 
 
@@ -181,6 +187,7 @@ if (training_regime == 1) {
 var teacher_facts = [" For a given angle in a rhombus, its opposite angle is the same", " All of the sides of a rhombus have the same length", 
 " A square has four sides of equal length, and four 90 degree angles", " The angles of a rectangle are all 90 degree, and opposite sides have the same length",
 " The opposite sides of a parallelogram are parallel", " A parallelogram can have 4 equal sides"];
+
 
 
 

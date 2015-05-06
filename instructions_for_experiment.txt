@@ -64,3 +64,15 @@ $(".btn-group > button.btn").on("click", function(){
 
 // I think this works better (at all):
 $("#my_radiogroup .active").data("value");
+
+
+
+
+
+
+
+For baseline condition: Choose carefully so that you can learn as much as you can about rhombuses. After you're done, you will be tested again on your knowledge. 
+
+And time the time they take on the testing slide.
+
+

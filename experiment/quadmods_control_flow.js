@@ -56,6 +56,17 @@ var experiment = {
 	age: "",
 	gender: "",
 
+	// measuring time of training 
+	training_time: "",
+
+
+	// To keep the parameters in the csv file 
+	all_answers_provided: all_answers_provided,
+	questions_permuted: questions_permuted,
+	skip_check: skip_check,
+	training_regime: training_regime,
+	examples_to_show: examples_to_show,
+	shape_of_focus: shape_of_focus,
 
 	// Bootstrap testing function
 	pre_test_slide: function() {
@@ -81,6 +92,9 @@ var experiment = {
 
 
 	training_slide: function() {
+		// record start time
+		startTime = new Date();
+		times.push(startTime);
 		var training_html = "";
 
 		if (training_regime < 2) {
@@ -145,7 +159,7 @@ var experiment = {
 
 		// Control layout: Same as in 3 & 4, but no participant action required.
 		if (training_regime == 5) {
-			training_html +=  "<center> Take a look at these examples of quadrilaterals.</center><br>";
+			training_html +=  "<center> Look at these examples of quadrilaterals. <br> Take your time. After you are done examining this set, <br> you will be tested again on your knowledge. </center><br>";
 			training_html += '<table align="center">';
 			for (i = 0; i < 4; i++) {
 				training_html += '<tr>';
@@ -170,6 +184,10 @@ var experiment = {
 
 
 	post_test_slide: function() {
+
+
+		endTime = new Date();
+		times.push(endTime);
 		var post_questions = "Please answer these yes or no questions: <br><br>";
 		post_questions += '<table align="center">';
 		for (var i = 0; i < questions.length; i++) {
@@ -347,7 +365,7 @@ var experiment = {
 		    experiment.gender = document.getElementById("gender").value;
 
 		    experiment.guesses = guessed_shapes;
-
+		    experiment.training_time = times[1] - times[0];
 		    showSlide("finished");
 
 		    // HERE you can performe the needed boolean logic to properly account for the target_filler_sequence possibilities.

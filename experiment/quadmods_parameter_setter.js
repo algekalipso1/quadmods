@@ -11,18 +11,17 @@ var questions_permuted = 1;
 
 // Skip the checks/tests for particpants' answers (for debugging mostly)
 // 0 means no skip, 1 means it skips
-var skip_check = 0;
+var skip_check = 1;
 
 // Training regime
 // 0 delivers an uninformative table of examples.
 // 1 delivers an informative table of examples.
 // 2 provides descriptions of the qualities of each of the quadrilaterals.
-// 3 Highlighting examples. This shows a table with all of the pictures, and then a selection of them
-//      is highlighted at the same time a teacher says "these are parallelograms", etc.
-// 4 Passive learning condition: few boxes get highlighted and participant is required to click on the highlighted boxes
+// 3 active learning: Participant can click on any of the 12 example. Turns blue if shape_of_focus, red otherwise
+// 4 Passive learning condition: few boxes get highlighted and participant is required to click on the highlighted boxes, a teacher says "these are parallelograms", etc.
 // 5 Baseline condition: You present the same layout as in 3 and 4. But no highlighting or anything. 
-//var training_regime = 5;
-var training_regime = random(3, 5);
+var training_regime = 4;
+//var training_regime = random(3, 5);
 
 // Number of examples to show. This is specifically for the case of training_regime == 3. If training_regime == 4
 // then you control the number of examples by editing the highlighted_boxes, which determines the specific examples used.

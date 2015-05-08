@@ -30,11 +30,10 @@ Are all parallelograms also squares?
 
 
 
+# 0 yes, 1 no
 
-
-
-
-
+c(0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1)
+# on rhombuses -> 3, 5, 7, 8, 9, 11
 
 
 

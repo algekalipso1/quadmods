@@ -1,9 +1,17 @@
 
 
-Experimenr 1:
+Experiment 1 - May 7th 2015
+
+Reward: .25
+
 var all_answers_provided = 0;
 var questions_permuted = 1;
 var skip_check = 0;
 var training_regime = random(3, 5);
 var examples_to_show = 3;
 var shape_of_focus = 2;
+
+https://www.mturk.com/mturk/preview?groupId=3ES1UQ6TFXN792G5BPH8S45TNH2LMT
+Assignments completed: 100/100 (100%)
+         Time elapsed: 7:14:03 (h:mm:ss)
+  Average submit time: 197.0 seconds

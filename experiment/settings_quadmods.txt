@@ -45,7 +45,7 @@ rewriteProperties::yes
 &&&     Selecting 'no' here means that you have to manually choose whether to go live or use the Sandbox, by going to the mturk.properties file and uncommenting the appropriate service URL and commenting out the wrong one. If you choose the manual route, the next ('liveHIT') option is not relevant. Also check that you're using https as Amazon has stopped supporting non-secure connections.
 &&&     This option was added on 8/21/12, in response to changes at AWS which rendered the useful -sandbox CLT option obsolete. (Grr.) 
 
-liveHIT::no
+liveHIT::yes
 &&&     Is this live or sandbox? set to yes to go live. default is no (sandbox). This is only relevant if you've decided to let Submiterator manipulate your mturk-properties file, by selecting 'yes' for the rewriteProperties option. Otherwise, choose sandbox vs. live HIT it manually by modifying the mturk.properties file.
 
 title::Geometry - yes or no
@@ -57,7 +57,7 @@ description:: Short and fun! A 2-3 minute game about geometry
 nameofexperimentfiles::quadmods
 &&& 	The files that the script generates for you will have names based on this option. 
 
-experimentURL::https://langcog.stanford.edu/expts/pragmods/pragmods_c1.html
+experimentURL::https://web.stanford.edu/~nc07agom/quadmods/experiment/quadmods.html
 &&&		experimentURL::http://langcog.stanford.edu/expts/MCF/pragmods_js/pragmods_v7.html
 &&& 	The URL where you've posted your external HIT
 

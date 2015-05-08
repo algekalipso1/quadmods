@@ -10,13 +10,13 @@ export JAVA_HOME=/Library/Java/Home
 
 	1) Add to the experiment_timeline doc what you will do
 
-	2) change the variables in parameter_setter
+	2) change the variables in quadmods_parameter_setter
 
-	3) change the variables in settings_c1.txt
+	3) change the variables in settings_quadmods.txt
 
 	4) Run the submiterator
 
-python submiterator.py settings_c1.txt
+python submiterator.py settings_quadmods.txt
 
 	5) Update the code online - Go to the folder experiments and do the following there:
 
@@ -33,11 +33,11 @@ scp pragmods_parameter_setter_c1.js nc07agom@cardinal.stanford.edu:/afs/ir/group
 
 	6) Post the HIT
 
-sh pragmods_c1-postHIT.sh
+sh quadmods-postHIT.sh
 
 	7) Retreive the results
 
-sh pragmods_c1-getResults.sh
+sh quadmods-getResults.sh
 
 	8) Add to experiment timeline the info you get. 
 

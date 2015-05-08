@@ -1,0 +1,95 @@
+---
+title: "Quadrilateral Models"
+author: "Andres Gomez Emilsson"
+date: "May 8, 2015"
+output: html_document
+---
+
+
+```{r prelims}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(binom)
+library(lme4)
+```
+
+
+```{r data_clean}
+d <- read.csv("experiment_1.tsv", header=TRUE, sep="\t", row.names=NULL, stringsAsFactors = FALSE)
+n_participants <- length(d$Answer.training_regime)
+
+pre_and_post_responses <- NULL
+
+for (i in 1:length(d$Answer.training_regime)){
+  pre_responses <- d$Answer.pretest_responses[i]
+  pre_responses <- substr(pre_responses, 2, 24)
+  pre_values <- as.integer(strsplit(pre_responses, ",")[[1]])
+  
+  post_responses <- d$Answer.posttest_responses[i]
+  post_responses <- substr(post_responses, 2, 24)
+  post_values <- as.integer(strsplit(post_responses, ",")[[1]])
+  
+  values <- c(pre_values, post_values)
+  
+  pre_and_post_responses <- rbind(pre_and_post_responses, values)
+}
+
+relevant_df <- data.frame(pre_and_post_responses)
+colnames(relevant_df) <- c("pre_1", "pre_2", "pre_3", "pre_4", "pre_5", "pre_6", "pre_7", "pre_8", "pre_9", "pre_10", "pre_11", "pre_12", "post_1", "post_2", "post_3", "post_4", "post_5", "post_6", "post_7", "post_8", "post_9", "post_10", "post_11", "post_12")
+
+
+# Condition 
+relevant_df$condition <- d$Answer.training_regime
+relevant_df$time <- d$Answer.training_time
+
+```
+
+Question order:
+
+Are all squares parallelograms?
+Are all squares rectangles?
+Are all squares also rhombuses?
+Are all rectangles also parallelograms?
+Are all rectangles also rhombuses?
+Are all rectangles also squares?
+Are all rhombuses also parallelograms?
+Are all rhombuses also rectangles?
+Are all rhombuses also squares?
+Are all parallelograms also rectangles?
+Are all parallelograms also rhombuses?
+Are all parallelograms also squares?
+
+
+```{r answer_means}
+correct_responses <- c(0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1)
+rhombus_related <- c(3, 5, 7, 8, 9, 11)
+
+relevant_df$pre_correct <- 1:n_participants*0
+relevant_df$post_correct <- 1:n_participants*0
+relevant_df$pre_rhombus_related <- 1:n_participants*0
+relevant_df$post_rhombus_related <- 1:n_participants*0
+for (i in 1:length(relevant_df$condition)) {
+  relevant_df$pre_correct[i] <- sum(correct_responses == relevant_df[i,1:12])
+  relevant_df$post_correct[i] <- sum(correct_responses == relevant_df[i,13:24])
+  relevant_df$pre_rhombus_related[i] <- sum(correct_responses[rhombus_related] == relevant_df[i,rhombus_related])
+  relevant_df$post_rhombus_related[i] <- sum(correct_responses[rhombus_related] == relevant_df[i,(rhombus_related + 12)])
+}
+
+relevant_df$correct_delta <- relevant_df$post_correct - relevant_df$pre_correct
+relevant_df$rhombus_delta <- relevant_df$post_rhombus_related - relevant_df$pre_rhombus_related
+
+
+
+means_by_condition <- answers_by_odd_one_kind <- aggregate(cbind(pre_11, post_11, pre_rhombus_related, post_rhombus_related, pre_correct, 
+                                                                 post_correct, correct_delta, time) ~ 
+                             condition, data=relevant_df, mean)
+
+means_by_condition
+
+
+summary(lm(rhombus_delta ~ as.factor(condition), data = relevant_df))
+
+```
+
+

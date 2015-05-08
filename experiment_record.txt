@@ -3,7 +3,7 @@
 Experimenr 1:
 var all_answers_provided = 0;
 var questions_permuted = 1;
-var skip_check = 1;
-var training_regime = 5;
+var skip_check = 0;
+var training_regime = random(3, 5);
 var examples_to_show = 3;
 var shape_of_focus = 2;

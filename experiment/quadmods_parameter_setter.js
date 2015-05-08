@@ -11,7 +11,7 @@ var questions_permuted = 1;
 
 // Skip the checks/tests for particpants' answers (for debugging mostly)
 // 0 means no skip, 1 means it skips
-var skip_check = 1;
+var skip_check = 0;
 
 // Training regime
 // 0 delivers an uninformative table of examples.
@@ -21,7 +21,8 @@ var skip_check = 1;
 //      is highlighted at the same time a teacher says "these are parallelograms", etc.
 // 4 Passive learning condition: few boxes get highlighted and participant is required to click on the highlighted boxes
 // 5 Baseline condition: You present the same layout as in 3 and 4. But no highlighting or anything. 
-var training_regime = 5;
+//var training_regime = 5;
+var training_regime = random(3, 5);
 
 // Number of examples to show. This is specifically for the case of training_regime == 3. If training_regime == 4
 // then you control the number of examples by editing the highlighted_boxes, which determines the specific examples used.

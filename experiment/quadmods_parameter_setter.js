@@ -11,7 +11,7 @@ var questions_permuted = 1;
 
 // Skip the checks/tests for particpants' answers (for debugging mostly)
 // 0 means no skip, 1 means it skips
-var skip_check = 1;
+var skip_check = 0;
 
 // Training regime
 // 0 delivers an uninformative table of examples.
@@ -20,8 +20,8 @@ var skip_check = 1;
 // 3 active learning: Participant can click on any of the 12 example. Turns blue if shape_of_focus, red otherwise
 // 4 Passive learning condition: few boxes get highlighted and participant is required to click on the highlighted boxes, a teacher says "these are parallelograms", etc.
 // 5 Baseline condition: You present the same layout as in 3 and 4. But no highlighting or anything. 
-var training_regime = 4;
-//var training_regime = random(3, 5);
+//var training_regime = 4;
+var training_regime = random(3, 4);
 
 // Number of examples to show. This is specifically for the case of training_regime == 3. If training_regime == 4
 // then you control the number of examples by editing the highlighted_boxes, which determines the specific examples used.
@@ -33,7 +33,9 @@ var examples_to_show = 3;
 //  1 -> rectangles
 //  2 -> rhombuses
 //  3 -> parallelograms
-var shape_of_focus = 2;
+var to_choose_from = [1, 3];
+var shape_of_focus = choose_from(to_choose_from);
+//var shape_of_focus = 3;
 
 
 

@@ -17,6 +17,10 @@ library(lme4)
 
 ```{r data_clean}
 d <- read.csv("experiment_1.tsv", header=TRUE, sep="\t", row.names=NULL, stringsAsFactors = FALSE)
+d1 <- read.csv("experiment_2.tsv", header=TRUE, sep="\t", row.names=NULL, stringsAsFactors = FALSE)
+
+d <- rbind(d, d1)
+
 n_participants <- length(d$Answer.training_regime)
 
 pre_and_post_responses <- NULL
@@ -42,6 +46,8 @@ colnames(relevant_df) <- c("pre_1", "pre_2", "pre_3", "pre_4", "pre_5", "pre_6",
 # Condition 
 relevant_df$condition <- d$Answer.training_regime
 relevant_df$time <- d$Answer.training_time
+relevant_df$shape <- d$Answer.shape_of_focus
+
 
 ```
 
@@ -60,36 +66,82 @@ Are all parallelograms also rectangles?
 Are all parallelograms also rhombuses?
 Are all parallelograms also squares?
 
+# shape numbers: 0 square, 1 rectangle, 2 rhombus, 3 parallelogram
+# conditions: 3 Active learning, 4 Passive learning, 5 Baseline condition
+
 
 ```{r answer_means}
 correct_responses <- c(0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1)
+square_related <- c(1, 2, 3, 6, 9, 12)
+rectangle_related <- c(2, 4, 5, 6, 8, 10)
 rhombus_related <- c(3, 5, 7, 8, 9, 11)
+parallelogram_related <- c(1, 4, 7, 10, 11, 12)
+
 
 relevant_df$pre_correct <- 1:n_participants*0
 relevant_df$post_correct <- 1:n_participants*0
+
+relevant_df$pre_square_related <- 1:n_participants*0
+relevant_df$post_square_related <- 1:n_participants*0
+
+relevant_df$pre_rectangle_related <- 1:n_participants*0
+relevant_df$post_rectangle_related <- 1:n_participants*0
+
 relevant_df$pre_rhombus_related <- 1:n_participants*0
 relevant_df$post_rhombus_related <- 1:n_participants*0
+
+relevant_df$pre_parallelogram_related <- 1:n_participants*0
+relevant_df$post_parallelogram_related <- 1:n_participants*0
+
+
 for (i in 1:length(relevant_df$condition)) {
   relevant_df$pre_correct[i] <- sum(correct_responses == relevant_df[i,1:12])
   relevant_df$post_correct[i] <- sum(correct_responses == relevant_df[i,13:24])
+  
+  relevant_df$pre_square_related[i] <- sum(correct_responses[square_related] == relevant_df[i,square_related])
+  relevant_df$post_square_related[i] <- sum(correct_responses[square_related] == relevant_df[i,(square_related + 12)])
+  relevant_df$pre_rectangle_related[i] <- sum(correct_responses[rectangle_related] == relevant_df[i,rectangle_related])
+  relevant_df$post_rectangle_related[i] <- sum(correct_responses[rectangle_related] == relevant_df[i,(rectangle_related + 12)])
   relevant_df$pre_rhombus_related[i] <- sum(correct_responses[rhombus_related] == relevant_df[i,rhombus_related])
   relevant_df$post_rhombus_related[i] <- sum(correct_responses[rhombus_related] == relevant_df[i,(rhombus_related + 12)])
+  relevant_df$pre_parallelogram_related[i] <- sum(correct_responses[parallelogram_related] == relevant_df[i,parallelogram_related])
+  relevant_df$post_parallelogram_related[i] <- sum(correct_responses[parallelogram_related] == relevant_df[i,(parallelogram_related + 12)])
 }
 
 relevant_df$correct_delta <- relevant_df$post_correct - relevant_df$pre_correct
+relevant_df$square_delta <- relevant_df$post_square_related - relevant_df$pre_square_related
+relevant_df$rectangle_delta <- relevant_df$post_rectangle_related - relevant_df$pre_rectangle_related
 relevant_df$rhombus_delta <- relevant_df$post_rhombus_related - relevant_df$pre_rhombus_related
+relevant_df$parallelogram_delta <- relevant_df$post_parallelogram_related - relevant_df$pre_parallelogram_related
 
 
 
-means_by_condition <- answers_by_odd_one_kind <- aggregate(cbind(pre_11, post_11, pre_rhombus_related, post_rhombus_related, pre_correct, 
-                                                                 post_correct, correct_delta, time) ~ 
-                             condition, data=relevant_df, mean)
+means_by_condition <- aggregate(cbind(pre_square_related, post_square_related, pre_rectangle_related, post_rectangle_related,  pre_rhombus_related, post_rhombus_related, pre_parallelogram_related, post_parallelogram_related, pre_correct, post_correct, correct_delta, time) ~ 
+                             condition + shape, data=relevant_df, mean)
 
 means_by_condition
 
+
+deltas_by_condition <- aggregate(cbind(correct_delta, square_delta, rectangle_delta, rhombus_delta, parallelogram_delta, time) ~ 
+                             condition + shape, data=relevant_df, mean)
+deltas_by_condition
 
 summary(lm(rhombus_delta ~ as.factor(condition), data = relevant_df))
 
 ```
 
+
+
+```{r process_guesses}
+# The idea of this block is to determine how people's guesses in the active learning condition influenced
+# their performance.
+
+d$Answer.guesses
+
+# How to encode the guesses? The rows are more important than the columns. So maybe something that reads:
+# "participant chose two squares and one rectangle"
+
+relevant_df$guessed <- 
+
+```
 

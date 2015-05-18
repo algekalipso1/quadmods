@@ -1,7 +1,7 @@
 ---
-title: "Quadrilateral Models"
-author: "Andres Gomez Emilsson"
-date: "May 8, 2015"
+title: "Quadrilateral learning experiments"
+author: "Andres Gomez Emilsson and Mike Frank"
+date: "May 17, 2015"
 output: html_document
 ---
 
@@ -56,8 +56,8 @@ Constants:
 ```{r}
 correct_answers <- c(0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1)
 
-questions <- factor(c("sp", "sr", "sh", "rp", "rh", "rs",
-                      "hs", "hr", "hp", "ps", "pr", "ph"))
+questions <- c("sp", "sr", "sh", "rp", "rh", "rs",
+                      "hs", "hr", "hp", "ps", "pr", "ph")
 
 related <- list(square = c(1, 2, 3, 6, 9, 12), 
                 rectangle = c(2, 4, 5, 6, 8, 10),
@@ -165,4 +165,24 @@ qplot(cond, m, fill = relevant,
       facets = . ~ shape, 
       data = ms,       
       geom = c("bar", "linerange"), stat = "identity")
+```
+
+Basic analysis over all questions - pretest only. Sanity check that we are getting reasonable answers?
+
+```{r}
+ms <- d %>% 
+  filter(phase == "pre") %>%
+  group_by(workerid, question) %>%
+  summarise(m = mean(correct)) %>%
+  group_by(question) %>%
+  summarise(m.cih = ci.high(m),
+            m.cil = ci.low(m),
+            m = mean(m))
+
+qplot(question, m, 
+      ymin = m - m.cil, ymax = m + m.cih,
+      position = position_dodge(width = .9),
+      data = ms,       
+      geom = c("bar", "linerange"), stat = "identity") + 
+  geom_hline(yintercept = .5, lty = 2)
 ```

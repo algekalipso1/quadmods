@@ -33,7 +33,7 @@ var examples_to_show = 3;
 //  1 -> rectangles
 //  2 -> rhombuses
 //  3 -> parallelograms
-var to_choose_from = [1, 3];
+var to_choose_from = [1, 2, 3];
 var shape_of_focus = choose_from(to_choose_from);
 //var shape_of_focus = 3;
 

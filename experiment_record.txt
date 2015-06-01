@@ -38,3 +38,28 @@ var to_choose_from = [1, 3];
 var shape_of_focus = choose_from(to_choose_from);
 
   https://www.mturk.com/mturk/preview?groupId=3ES1UQ6TFXN792G5BPH8S45TNH2LMT
+
+
+
+
+Experiment 3 - June 1st 2015 
+The main idea here is to simply add samples to the two previous experiments. Take care of the baseline condition after this.
+
+
+Reward: 0.25
+Participants: 180
+
+
+var all_answers_provided = 0;
+var questions_permuted = 1;
+var skip_check = 0;
+var training_regime = random(3, 4);
+var examples_to_show = 3;
+var to_choose_from = [1, 2, 3];
+var shape_of_focus = choose_from(to_choose_from);
+
+
+Assignments completed: 180/180 (100%)
+         Time elapsed: 8:09:41 (h:mm:ss)
+  Average submit time: 179.8 seconds
+

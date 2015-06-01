@@ -16,6 +16,7 @@ library(binom)
 library(lme4)
 library(bootstrap)
 library(magrittr)
+library(stringr)
 
 ## for bootstrapping 95% confidence intervals
 theta <- function(x,xdata,na.rm=T) {mean(xdata[x],na.rm=na.rm)}
@@ -54,15 +55,16 @@ Constants:
 * Are all parallelograms also squares?
 
 ```{r}
-correct_answers <- c(0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1)
+questions <- c("sr","sh","sp","rs","rh","rp","hs","hr","hp","ps","pr","ph")
 
-questions <- c("sp", "sr", "sh", "rp", "rh", "rs",
-                      "hs", "hr", "hp", "ps", "pr", "ph")
+correct_answers <- c(1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0) 
+answer_key <- 1 - correct_answers ## a yes answer is coded as "0" in the data
 
-related <- list(square = c(1, 2, 3, 6, 9, 12), 
-                rectangle = c(2, 4, 5, 6, 8, 10),
-                rhombus = c(3, 5, 7, 8, 9, 11),
-                parallel = c(1, 4, 7, 10, 11, 12))
+related <- list(square = which(grepl("s", questions)),
+                rectangle = which(grepl("r", questions)),
+                rhombus = which(grepl("h", questions)),
+                parallel = which(grepl("p", questions)))
+
 ```
 
 Data cleaning
@@ -75,20 +77,20 @@ Data cleaning
 ```{r}
 d <- rd %>% 
   select(workerid, starts_with("Answer")) %>%
-  rename(pre = Answer.pretest_responses,
-         post = Answer.posttest_responses,
+  rename(pre = Answer.pretest_responses_by_presented_order,
+         post = Answer.posttest_responses_by_presented_order,
+         ord = Answer.permutations_used,
          time = Answer.training_time, 
          shape = Answer.shape_of_focus,
          cond = Answer.training_regime) %>%
   select(-starts_with("Answer")) %>%
   rowwise %>%
   do(data.frame(workerid = .$workerid, 
-                pre = as.integer(strsplit(substr(.$pre, 2, 24),
-                                                  ",")[[1]]),                
-                post = as.integer(strsplit(substr(.$post, 2, 24),
-                                                  ",")[[1]]),
+                pre = as.integer(strsplit(substr(.$pre, 2, 24), ",")[[1]]),                
+                post = as.integer(strsplit(substr(.$post, 2, 24), ",")[[1]]),
                 time = .$time, 
-                qnum = 1:12,
+                # note zero indexing of orders, that's why +1                                           
+                qnum = as.integer(strsplit(substr(.$ord, 2, 26), ",")[[1]]) + 1, 
                 cond = .$cond,
                 shape = .$shape)) %>%
   gather(phase, resp, pre, post) %>%
@@ -99,7 +101,7 @@ d <- rd %>%
                         levels = c(0, 1, 2, 3), 
                         labels = c("square","rectangle","rhombus","parallel")),
          question = questions[qnum], 
-         answer = correct_answers[qnum],
+         answer = answer_key[qnum],
          correct = resp == answer) %>%
   rowwise() %>%
   mutate(relevant = qnum %in% related[shape][[1]])
@@ -173,7 +175,7 @@ Basic analysis over all questions - pretest only. Sanity check that we are getti
 ms <- d %>% 
   filter(phase == "pre") %>%
   group_by(workerid, question) %>%
-  summarise(m = mean(correct)) %>%
+  summarise(m = mean(1 - resp)) %>%
   group_by(question) %>%
   summarise(m.cih = ci.high(m),
             m.cil = ci.low(m),
